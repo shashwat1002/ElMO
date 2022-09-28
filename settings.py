@@ -31,4 +31,8 @@ SPECIAL_TOKENS = [
 
 N = 4
 
+HIDDEN_SIZE = 50
+
 DEVICE = torch.device("cuda")
+
+MIN_FREQ = 3
