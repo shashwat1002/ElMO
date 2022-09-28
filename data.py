@@ -14,6 +14,7 @@ TOKENIZER = get_tokenizer('basic_english')
 
 MIN_FREQ = 1
 
+
 class Language:
     # class to keep information like vocabulary
 
@@ -36,11 +37,12 @@ class Language:
                     sentence = sentence.replace(character, " ")
                 sentence_list.append(sentence)
 
-        sentence_list_tokenized = [TOKENIZER(sentence) for sentence in sentence_list]
+        sentence_list_tokenized = [
+            TOKENIZER(sentence) for sentence in sentence_list]
         self.vocab = vocab.build_vocab_from_iterator(sentence_list_tokenized,
-                                                    min_freq=min_freq,
-                                                    specials=SPECIAL_TOKENS,
-                                                    special_first=True)
+                                                     min_freq=min_freq,
+                                                     specials=SPECIAL_TOKENS,
+                                                     special_first=True)
 
         # use this index for OOV
         # THIS LINE ONLY WORKS IF special_first=True
@@ -80,20 +82,17 @@ class Language:
         # we generate the vocabulary from this
 
         self.vocab = vocab.build_vocab_from_iterator([[token] for token in intersection_token_list],
-                                                            specials=SPECIAL_TOKENS,
-                                                            special_first=True)
+                                                     specials=SPECIAL_TOKENS,
+                                                     special_first=True)
         self.vocab.set_default_index(SPECIAL_TOKEN_DICT["<unk>"])
 
     def get_embedding_list_intersect_vocab(self):
         return self.glove_layer.get_vecs_by_tokens(self.vocab.get_itos()).to(DEVICE)
 
 
-
-
 class DatasetYELP(Dataset):
 
     def __init__(self, language_obj, file_path, pad=False):
-
 
         sentence_set = []
         label_set = []
@@ -133,7 +132,8 @@ class DatasetYELP(Dataset):
         for i, sentence_tokenized in enumerate(self.tokenized_sentences):
             # for padding
             if pad:
-                self.tokenized_sentences[i] = sentence_tokenized + ["<eos>" for i in  range(length_longest-len(sentence_tokenized))]
+                self.tokenized_sentences[i] = sentence_tokenized + [
+                    "<eos>" for i in range(length_longest-len(sentence_tokenized))]
                 # ic(length_longest-len(sentence_tokenized), len(["<eos>" * (length_longest-len(sentence_tokenized))]))
             else:
                 sentence_tokenized.append("<eos>")
@@ -141,7 +141,8 @@ class DatasetYELP(Dataset):
         self.words_as_indices_sentences = []
 
         for sentence_tokenized in self.tokenized_sentences:
-            sentence_as_index_list = self.language_obj.vocab.lookup_indices(sentence_tokenized)
+            sentence_as_index_list = self.language_obj.vocab.lookup_indices(
+                sentence_tokenized)
             self.words_as_indices_sentences.append(sentence_as_index_list)
 
     def __len__(self):
@@ -155,13 +156,11 @@ class DatasetYELP(Dataset):
         return torch.tensor(sentence_index_list, device=DEVICE), torch.tensor(self.label_set[index])
 
 
+language = Language("data/anlp-assgn2-data/yelp-subset.train.csv",
+                    MIN_FREQ, glove_dim=50, glove_name="twitter.27B")
 
-
-
-
-language = Language("data/anlp-assgn2-data/yelp-subset.train.csv", MIN_FREQ, glove_dim=50, glove_name="twitter.27B")
-
-test_dataset = DatasetYELP(language, "data/anlp-assgn2-data/yelp-subset.train.csv", pad=True)
+test_dataset = DatasetYELP(
+    language, "data/anlp-assgn2-data/yelp-subset.train.csv", pad=True)
 test_dataloader = DataLoader(test_dataset, batch_size=3)
 
 
@@ -170,4 +169,3 @@ ic(test_dataset.language.get_embedding_list_intersect_vocab().size())
 ic(test_dataset.language.get_embedding_list_intersect_vocab()[0:5, :])
 
 ic(next(iter(test_dataloader)))
-
