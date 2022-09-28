@@ -96,6 +96,7 @@ class DatasetYELP(Dataset):
 
         sentence_set = []
         label_set = []
+        self.language = language_obj
 
         with open(file_path, "r") as data_file:
             dict_reader_obj = csv.DictReader(data_file, ["label", "text"])
@@ -157,7 +158,7 @@ class DatasetYELP(Dataset):
 
 
 language = Language("data/anlp-assgn2-data/yelp-subset.train.csv",
-                    MIN_FREQ, glove_dim=50, glove_name="twitter.27B")
+                    MIN_FREQ, glove_dim=HIDDEN_SIZE, glove_name="twitter.27B")
 
 test_dataset = DatasetYELP(
     language, "data/anlp-assgn2-data/yelp-subset.train.csv", pad=True)
