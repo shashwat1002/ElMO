@@ -152,8 +152,8 @@ class DatasetYELP(Dataset):
     def __getitem__(self, index):
 
         sentence_index_list = self.words_as_indices_sentences[index]
-        if len(sentence_index_list) > 200 and self.pad:
-            sentence_index_list = sentence_index_list[:200]
+        # if len(sentence_index_list) > 200 and self.pad:
+        #     sentence_index_list = sentence_index_list[:200]
         return torch.tensor(sentence_index_list, device=DEVICE), torch.tensor(self.label_set[index])
 
 
