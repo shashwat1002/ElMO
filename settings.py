@@ -33,13 +33,14 @@ N = 4
 
 HIDDEN_SIZE = 50
 
-DEVICE = torch.device("cuda")
+DEVICE = torch.device("cpu")
 
-MIN_FREQ = 5
+# MIN_FREQ = 3
+MIN_FREQ = 5 #do this if vocab index out of range
 
 TRAIN_FILE_PATH = "data/anlp-assgn2-data/yelp-subset.train.csv"
 TEST_FILE_PATH = "data/anlp-assgn2-data/yelp-subset.test.csv"
 VALIDATION_FILE_PATH = "data/anlp-assgn2-data/yelp-subset.dev.csv"
 
 NUM_EPOCHS = 5
-BATCH_SIZE = 10
+BATCH_SIZE = 100

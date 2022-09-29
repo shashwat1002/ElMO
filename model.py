@@ -38,6 +38,8 @@ class ELMO(torch.nn.Module):
         self.mode_t = TRAIN_MODES["train"]
         # this is the default
 
+        self.yelp_classifier = nn.Linear(hidden_size*2, 5)
+
 
     def fine_tune_mode(self):
         self.mode_t = TRAIN_MODES["fine-tune"]
