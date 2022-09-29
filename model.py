@@ -79,7 +79,8 @@ class ELMO(torch.nn.Module):
 
     def forward_pretrain(self, batch):
         hidden2_for, hidden1_for, hidden2_back, hidden1_back = self.forward_all_info(batch)
-        return (hidden2_for, hidden2_back)
+        score_for, score_back = self.score_layer(hidden2_for), self.score_layer(hidden2_back)
+        return (score_for, score_back)
 
     def forward_finetune_task(self, batch):
         hidden2_for, hidden1_for, hidden2_back, hidden1_back = self.forward_all_info(batch)
@@ -120,18 +121,18 @@ class ELMO(torch.nn.Module):
 
 
 
-language = Language("data/anlp-assgn2-data/yelp-subset.train.csv",
-                    MIN_FREQ, glove_dim=HIDDEN_SIZE, glove_name="twitter.27B")
+# language = Language("data/anlp-assgn2-data/yelp-subset.train.csv",
+#                     MIN_FREQ, glove_dim=HIDDEN_SIZE, glove_name="twitter.27B")
 
-test_dataset = DatasetYELP(
-    language, "data/anlp-assgn2-data/yelp-subset.train.csv", pad=True)
-test_dataloader = DataLoader(test_dataset, batch_size=3)
+# test_dataset = DatasetYELP(
+#     language, "data/anlp-assgn2-data/yelp-subset.train.csv", pad=True)
+# test_dataloader = DataLoader(test_dataset, batch_size=3)
 
-elmodel = ELMO(language.vocab, language.get_embedding_list_intersect_vocab(), HIDDEN_SIZE).to(DEVICE)
+# elmodel = ELMO(language.vocab, language.get_embedding_list_intersect_vocab(), HIDDEN_SIZE).to(DEVICE)
 
-elmodel.mode_t = 0
-ic(elmodel((next(iter(test_dataloader))[0])))
+# elmodel.mode_t = 0
+# ic(elmodel((next(iter(test_dataloader))[0])))
 
 
-elmodel.mode_t = 1
-ic(elmodel((next(iter(test_dataloader))[0])))
+# elmodel.mode_t = 1
+# ic(elmodel((next(iter(test_dataloader))[0])))

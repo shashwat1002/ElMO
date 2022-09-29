@@ -157,16 +157,16 @@ class DatasetYELP(Dataset):
         return torch.tensor(sentence_index_list, device=DEVICE), torch.tensor(self.label_set[index])
 
 
-language = Language("data/anlp-assgn2-data/yelp-subset.train.csv",
-                    MIN_FREQ, glove_dim=HIDDEN_SIZE, glove_name="twitter.27B")
+# language = Language("data/anlp-assgn2-data/yelp-subset.train.csv",
+#                     MIN_FREQ, glove_dim=HIDDEN_SIZE, glove_name="twitter.27B")
 
-test_dataset = DatasetYELP(
-    language, "data/anlp-assgn2-data/yelp-subset.train.csv", pad=True)
-test_dataloader = DataLoader(test_dataset, batch_size=3)
+# test_dataset = DatasetYELP(
+#     language, "data/anlp-assgn2-data/yelp-subset.train.csv", pad=True)
+# test_dataloader = DataLoader(test_dataset, batch_size=3)
 
 
-ic(next(iter(test_dataloader)))
-ic(test_dataset.language.get_embedding_list_intersect_vocab().size())
-ic(test_dataset.language.get_embedding_list_intersect_vocab()[0:5, :])
+# ic(next(iter(test_dataloader)))
+# ic(test_dataset.language.get_embedding_list_intersect_vocab().size())
+# ic(test_dataset.language.get_embedding_list_intersect_vocab()[0:5, :])
 
-ic(next(iter(test_dataloader)))
+# ic(next(iter(test_dataloader)))

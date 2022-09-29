@@ -35,4 +35,11 @@ HIDDEN_SIZE = 50
 
 DEVICE = torch.device("cuda")
 
-MIN_FREQ = 3
+MIN_FREQ = 5
+
+TRAIN_FILE_PATH = "data/anlp-assgn2-data/yelp-subset.train.csv"
+TEST_FILE_PATH = "data/anlp-assgn2-data/yelp-subset.test.csv"
+VALIDATION_FILE_PATH = "data/anlp-assgn2-data/yelp-subset.dev.csv"
+
+NUM_EPOCHS = 5
+BATCH_SIZE = 10
